@@ -7,13 +7,7 @@ from pyvirtualdisplay import Display
 @pytest.fixture(scope="session")
 def config_data(request):
 
-    config_file = "config.yaml"
-    if os.environ.get("WEB_CONFIG"):
-        config_file = os.environ.get("WEB_CONFIG")
-    print(f"WEB_CONFIG set to {config_file}")
-    with open(config_file, 'r') as file:
-        data = yaml.safe_load(file)
-
+    data = {}
     data["hide_browser"] = request.config.getoption("--hide_browser")
     return data
 
