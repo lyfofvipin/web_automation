@@ -7,6 +7,10 @@ from shutil import rmtree
 logs_dir = "logs"
 screenshot_dir = "logs/screenshot/"
 video_dir = "logs/videos/"
+myntra_pics = "logs/myntra/"
+savana_pics = "logs/savana/"
+new_asia_pics = "logs/newasia/"
+
 def check_and_create_dir(path: str) -> None:
     rmtree(path, ignore_errors=True)
     if not os.path.exists(path):
@@ -14,6 +18,9 @@ def check_and_create_dir(path: str) -> None:
 check_and_create_dir(logs_dir)
 check_and_create_dir(screenshot_dir)
 check_and_create_dir(video_dir)
+check_and_create_dir(myntra_pics)
+check_and_create_dir(savana_pics)
+check_and_create_dir(new_asia_pics)
 
 def get_timestamp() -> str:
     """
