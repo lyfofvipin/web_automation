@@ -24,7 +24,7 @@ def browser(config_data):
         display = Display(visible=0)
         display.start()
     with sync_playwright() as play_browser:
-        browser = play_browser.chromium.launch(headless=False, executable_path="/usr/bin/google-chrome")
+        browser = play_browser.firefox.launch(headless=False)
         yield browser
         browser.close()
     if config_data.get("hide_browser"): display.stop()
@@ -32,7 +32,7 @@ def browser(config_data):
 @pytest.fixture(scope="session")
 def web_page(browser, request):
     if request.config.getoption("--record_video") == "yes":
-        page = browser.new_page(record_video_dir=video_dir)
+        page = browser.new_page(record_video_dir=video_dir, no_viewport=True)
     else:
         page = browser.new_page()
     yield page

@@ -40,7 +40,7 @@ def click_or_validate_element(page,
                               click=True,
                               fill="",
                               select_element=None,
-                              check=False):
+                              new_tab=False):
 
     """
     This function will do operations on web element.
@@ -81,12 +81,19 @@ def click_or_validate_element(page,
         choice_value = choice(range(0, element.count()))
         add_to_logs(f"Selecting Value {choice_value} for element {locator} as {method}")
         element = element.nth(choice_value)
-    elif select_element:
+    elif select_element != None:
         element = element.nth(select_element)
 
-    if click: 
-        element.click(timeout=wait)
+    if click:
         add_to_logs(f"Clicking on {locator} as {method}")
+        if new_tab:
+            add_to_logs(f"opening the link in new_tab")
+            with page.context.expect_page() as tab:
+                element.click(timeout=wait)
+                return tab
+        else:
+            element.click(timeout=wait)
+    
     if take_screenshot: page.screenshot(full_page=True, path=os.path.join(screenshot_dir, f"{get_timestamp()}.png"))
     if fill: 
         element.fill(fill, timeout=wait)
